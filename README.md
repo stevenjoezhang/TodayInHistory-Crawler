@@ -7,7 +7,9 @@ python3, mysql and php is required. You can use `apt-get`, `yum` or `brew` to in
 
 ## Install
 ```bash
+# Clone this repository
 git clone https://github.com/stevenjoezhang/TodayInHistory-Crawler.git
+# Go into the repository
 cd TodayInHistory-Crawler
 ```
 
@@ -17,12 +19,14 @@ cd TodayInHistory-Crawler
 create database dbname;
 #建立数据库images
 use dbname;
-CREATE TABLE `event` (
-  `type` int(1) DEFAULT NULL,
-  `year` varchar(6) DEFAULT NULL,
-  `date` varchar(6) DEFAULT NULL,
-  `info` varchar(300) DEFAULT NULL
+CREATE TABLE event (
+  id int(6) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  type int(1) DEFAULT NULL,
+  year varchar(6) DEFAULT NULL,
+  date varchar(6) DEFAULT NULL,
+  info varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+quit;
 ```
 然后，运行`today.py`（如果中文维基百科无法正常访问，请使用该文件中提供的代理）：
 ```bash

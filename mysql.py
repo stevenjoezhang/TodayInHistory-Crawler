@@ -6,7 +6,7 @@ def savedb(data):
 	print(conn)
 	cur = conn.cursor()
 	try:
-		cur.execute("insert into event values(%s,%s,%s,%s)", data)
+		cur.execute("insert into event values(null,%s,%s,%s,%s)", data)
 	except pymysql.err.InternalError:
 		print("\033[31mERROR: Incorrect string value.\033[0m", data)
 		with open("errors.txt", "a") as myfile:
