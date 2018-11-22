@@ -1,27 +1,41 @@
 <?php
-	//生成一个连接
-	$db_connect = mysqli_connect("127.0.0.1", "username", "password");
+	$link = mysqli_connect("127.0.0.1", "username", "password", "dbname");
 
-	$date = $_GET['date'] ? mysqli_real_escape_string($db_connect, $_GET['date']) : date("m月d日");
-	$type = $_GET['type'] ? mysqli_real_escape_string($db_connect, $_GET['type']) : 0;
-
-	//选择一个需要操作的数据库
-	mysqli_select_db($db_connect, "dbname");
-
-	// 获取查询结果
-	$strsql = "select * from `event` where `date` = '$date' and `type` = '$type' order by RAND() limit 1";
-	$result = mysqli_query($db_connect, $strsql);
-
-	// 循环取出记录
-	while ($row = mysqli_fetch_array($result)) {
-		$year = $row['year'];
-		$info = $row['info'];
+	/* 检查连接 */
+	if (mysqli_connect_errno()) {
+		printf("Connect failed: %s\n", mysqli_connect_error());
+		exit();
 	}
 
-	// 释放资源
-	mysqli_free_result($result);
-	// 关闭连接
-	mysqli_close($db_connect);
-	$arr = array('year' => $year, 'info' => $info);
-	echo json_encode($arr, JSON_UNESCAPED_UNICODE);
+	$date = $_GET['date'] ? mysqli_real_escape_string($link, $_GET['date']) : date("m月d日");
+	$type = $_GET['type'] ? (int)mysqli_real_escape_string($link, $_GET['type']) : 0;
+	$count = $_GET['count'] ? (int)mysqli_real_escape_string($link, $_GET['count']) : 1;
+	$result = array();
+
+	/* 创建一个预编译 SQL 语句 */
+	if ($stmt = mysqli_prepare($link, "select * from `event` where `date` = ? and `type` = ? order by RAND() limit ?")) {
+
+		/* 对于参数占位符进行参数值绑定 */
+		mysqli_stmt_bind_param($stmt, "ssd", $date, $type, $count);
+
+		/* 执行查询 */
+		mysqli_stmt_execute($stmt);
+
+		/* 将查询结果绑定到变量 */
+		mysqli_stmt_bind_result($stmt, $id, $type, $year, $date, $info);
+
+		/* 获取查询结果值 */
+		while (mysqli_stmt_fetch($stmt)) {
+			$arr = array('year' => $year, 'info' => $info);
+			$result[] = $arr;
+		};
+
+		echo json_encode($result, JSON_UNESCAPED_UNICODE);
+
+		/* 关闭语句句柄 */
+		mysqli_stmt_close($stmt);
+	}
+
+	/* 关闭连接 */
+	mysqli_close($link);
 ?>
