@@ -16,17 +16,17 @@ cd TodayInHistory-Crawler
 ## Run
 修改`mysql.py`和`index.php`中的参数`username`、`password`和`dbname`，分别是你的登录用户名、密码和数据库名。数据表名默认是event，也可以自行修改。先创建数据表，执行：
 ```sql
-create database dbname;
-#建立数据库images
-use dbname;
+CREATE DATABASE dbname;
+#建立数据库，可以将dbname替换为images
+USE dbname;
 CREATE TABLE event (
-  id int(6) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id int(10) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   type int(1) DEFAULT NULL,
   year varchar(6) DEFAULT NULL,
   date varchar(6) DEFAULT NULL,
   info varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-quit;
+QUIT;
 ```
 然后，运行`today.py`（如果中文维基百科无法正常访问，请使用该文件中提供的代理）：
 ```bash

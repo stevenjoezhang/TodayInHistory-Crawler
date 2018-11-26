@@ -9,11 +9,11 @@ def savedb(data):
 		cur.execute("insert into event values(null,%s,%s,%s,%s)", data)
 	except pymysql.err.InternalError:
 		print("\033[31mERROR: Incorrect string value.\033[0m", data)
-		with open("errors.txt", "a") as myfile:
+		with open("failed.txt", "a") as myfile:
 			myfile.write(str(data) + "\n")
 	except pymysql.err.DataError:
 		print("\033[31mERROR: Data too long.\033[0m", data)
-		with open("errors.txt", "a") as myfile:
+		with open("failed.txt", "a") as myfile:
 			myfile.write(str(data) + "\n")
 	cur.connection.commit()
 	cur.close()
