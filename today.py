@@ -34,7 +34,7 @@ def main():
 	for date in list:
 		print(date)
 		url = "https://zh.wikipedia.org/zh-cn/%s" % date
-		#url = "https://galaxymimi.com/api/proxy/?url=https://zh.wikipedia.org/zh-cn/%s" % date
+		#url = "https://api.galaxymimi.com/proxy/?url=https://zh.wikipedia.org/zh-cn/%s" % date
 		r = requests.get(url)
 		getInfo(r.text, 0, date)  # 大事记
 		getInfo(r.text, 1, date)  # 出生
