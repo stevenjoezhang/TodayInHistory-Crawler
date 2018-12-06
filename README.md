@@ -17,7 +17,7 @@ cd TodayInHistory-Crawler
 修改`mysql.py`和`index.php`中的参数`username`、`password`和`dbname`，分别是你的登录用户名、密码和数据库名。数据表名默认是event，也可以自行修改。先创建数据表，执行：
 ```sql
 CREATE DATABASE dbname;
-#建立数据库，可以将dbname替换为images
+#建立数据库，dbname保持一致即可
 USE dbname;
 CREATE TABLE event (
   id int(10) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,

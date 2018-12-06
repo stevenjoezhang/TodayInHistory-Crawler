@@ -1,5 +1,5 @@
 <?php
-	$mysqli = new mysqli("localhost", "username", "password", "mimi");
+	$mysqli = new mysqli("localhost", "username", "password", "dbname");
 
 	/* 检查连接 */
 	if (mysqli_connect_errno()) {
