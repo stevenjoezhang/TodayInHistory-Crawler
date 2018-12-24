@@ -7,10 +7,10 @@
 		exit();
 	}
 
-	$date = $_GET['date'] ? $mysqli->real_escape_string($_GET['date']) : date("m月d日");
-	$type = $_GET['type'] ? (int)$mysqli->real_escape_string($_GET['type']) : 0;
-	$count = $_GET['count'] ? (int)$mysqli->real_escape_string($_GET['count']) : 1;
-	$result = array();
+	@$date = $_GET['date'] ? $mysqli->real_escape_string($_GET['date']) : date("m月d日");
+	@$type = $_GET['type'] ? (int)$mysqli->real_escape_string($_GET['type']) : 0;
+	@$count = $_GET['count'] ? (int)$mysqli->real_escape_string($_GET['count']) : 1;
+	$result = [];
 
 	/* 创建一个预编译 SQL 语句 */
 	if ($stmt = $mysqli->prepare("select * from `event` where `date` = ? and `type` = ? order by RAND() limit ?")) {
@@ -26,7 +26,7 @@
 
 		/* 获取查询结果值 */
 		while ($stmt->fetch()) {
-			$arr = array('year' => $year, 'info' => $info);
+			$arr = ['year' => $year, 'info' => $info];
 			$result[] = $arr;
 		};
 

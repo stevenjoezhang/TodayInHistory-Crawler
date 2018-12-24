@@ -1,11 +1,27 @@
 #!/usr/bin/env python3
+
 import requests
 from bs4 import BeautifulSoup
 import datetime
 import re
-import mysql
+import pymysql
 
-typeList = ["大事记", "出生", "逝世"]
+conn = pymysql.connect(host = "127.0.0.1", user = "username", password = "password", db = "dbname", charset = "utf8")
+print(conn)
+cur = conn.cursor()
+
+def savedb(data):
+	print(data)
+	try:
+		cur.execute("insert into event values(null,%s,%s,%s,%s)", data)
+	except pymysql.err.InternalError:
+		print("\033[31mERROR: Incorrect string value.\033[0m", data)
+		with open("failed.txt", "a") as myfile:
+			myfile.write(str(data) + "\n")
+	except pymysql.err.DataError:
+		print("\033[31mERROR: Data too long.\033[0m", data)
+		with open("failed.txt", "a") as myfile:
+			myfile.write(str(data) + "\n")
 
 def getDateList():
 	list = []
@@ -17,6 +33,7 @@ def getDateList():
 	return list
 
 def getInfo(html, type, date):
+	typeList = ["大事记", "出生", "逝世"]
 	flag = re.compile("(<h2><span id=.*<span class=\"mw-headline\" id=.*?" + typeList[type] + "[\s\S]*?</ul>\s*?)<h2>").search(html)
 	if flag:
 		bsObj = BeautifulSoup(flag.group(1), "html.parser").findAll("li")
@@ -26,19 +43,18 @@ def getInfo(html, type, date):
 				year = match.group(1)
 				info = re.sub("\[\d{1,}\]", "", match.group(3).strip())
 				data = (type, year, date, info)
-				print(data)
-				mysql.savedb(data)
+				savedb(data)
 
-def main():
-	list = getDateList()
-	for date in list:
-		print(date)
-		url = "https://zh.wikipedia.org/zh-cn/%s" % date
-		#url = "https://api.galaxymimi.com/proxy/?url=https://zh.wikipedia.org/zh-cn/%s" % date
-		r = requests.get(url)
-		getInfo(r.text, 0, date)  # 大事记
-		getInfo(r.text, 1, date)  # 出生
-		getInfo(r.text, 2, date)  # 逝世
+list = getDateList()
+for date in list:
+	print(date)
+	url = "https://zh.wikipedia.org/zh-cn/%s" % date
+	#url = "https://api.galaxymimi.com/proxy/?url=https://zh.wikipedia.org/zh-cn/%s" % date
+	r = requests.get(url)
+	getInfo(r.text, 0, date)  # 大事记
+	getInfo(r.text, 1, date)  # 出生
+	getInfo(r.text, 2, date)  # 逝世
 
-if __name__ == '__main__':
-	main()
+cur.connection.commit()
+cur.close()
+conn.close()

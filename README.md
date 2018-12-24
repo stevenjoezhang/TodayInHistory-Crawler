@@ -3,7 +3,7 @@
 通过爬取维基百科，获得“历史上的今天”数据库，并提供API。
 
 ## Requirements
-python3, mysql and php is required. You can use `apt-get`, `yum` or `brew` to install them.
+Python3, MySQL and PHP is required. You can use `apt-get`, `yum` or `brew` to install them.
 
 ## Install
 ```bash
