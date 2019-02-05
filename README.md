@@ -11,6 +11,8 @@ Python3, MySQL and PHP is required. You can use `apt-get`, `yum` or `brew` to in
 git clone https://github.com/stevenjoezhang/TodayInHistory-Crawler.git
 # Go into the repository
 cd TodayInHistory-Crawler
+# Install dependencies
+pip3 install -r requirements.txt
 ```
 
 ## Run
