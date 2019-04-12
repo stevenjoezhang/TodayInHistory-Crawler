@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 
+username = "username"
+password = "password"
+dbname = "dbname"
+
 import requests
 from bs4 import BeautifulSoup
-import datetime
 import re
+import datetime
 import pymysql
 
-conn = pymysql.connect(host = "127.0.0.1", user = "username", password = "password", db = "dbname", charset = "utf8")
+conn = pymysql.connect(host = "127.0.0.1", user = username, password = password, db = dbname, charset = "utf8")
 print(conn)
 cur = conn.cursor()
 
@@ -49,11 +53,10 @@ list = getDateList()
 for date in list:
 	print(date)
 	url = "https://zh.wikipedia.org/zh-cn/%s" % date
-	#url = "https://api.galaxymimi.com/proxy/?url=https://zh.wikipedia.org/zh-cn/%s" % date
 	r = requests.get(url)
-	getInfo(r.text, 0, date)  # 大事记
-	getInfo(r.text, 1, date)  # 出生
-	getInfo(r.text, 2, date)  # 逝世
+	getInfo(r.text, 0, date) # 大事记
+	getInfo(r.text, 1, date) # 出生
+	getInfo(r.text, 2, date) # 逝世
 
 cur.connection.commit()
 cur.close()
