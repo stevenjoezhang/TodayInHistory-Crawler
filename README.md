@@ -27,7 +27,7 @@ CREATE TABLE event (
   year varchar(6) DEFAULT NULL,
   date varchar(6) DEFAULT NULL,
   info varchar(300) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 QUIT;
 ```
 然后，运行`spider.py`（如果中文维基百科无法正常访问，请使用代理）：

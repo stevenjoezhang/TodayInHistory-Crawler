@@ -13,6 +13,7 @@ import pymysql
 conn = pymysql.connect(host = "127.0.0.1", user = username, password = password, db = dbname, charset = "utf8")
 print(conn)
 cur = conn.cursor()
+cur.execute("SET NAMES utf8mb4")
 
 def savedb(data):
 	print(data)
