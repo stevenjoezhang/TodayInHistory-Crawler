@@ -29,13 +29,13 @@ def savedb(data):
 			myfile.write(str(data) + "\n")
 
 def getDateList():
-	list = []
+	lst = []
 	date = datetime.date(2016, 1, 1)
 	for i in range(366):
 		date_str = str(date.month) + "月" + str(date.day) + "日"
-		list.append(date_str)
+		lst.append(date_str)
 		date += datetime.timedelta(days = 1)
-	return list
+	return lst
 
 def getInfo(html, type, date):
 	typeList = ["大事记", "出生", "逝世"]
@@ -50,8 +50,7 @@ def getInfo(html, type, date):
 				data = (type, year, date, info)
 				savedb(data)
 
-list = getDateList()
-for date in list:
+for date in getDateList():
 	print(date)
 	url = "https://zh.wikipedia.org/zh-cn/%s" % date
 	r = requests.get(url)
