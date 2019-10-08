@@ -1,10 +1,10 @@
 # Today in History
 
-通过爬取维基百科，获得“历史上的今天”数据库，并提供API。
+通过爬取维基百科，获得「历史上的今天」数据库，并提供API。
 
 ## Requirements
 
-Python3 and MySQL is required. You can use `apt-get`, `yum` or `brew` to install them.
+Python3 and MySQL is required. You can use `apt`, `yum` or `brew` to install them.
 
 ## Install
 
@@ -17,7 +17,7 @@ cd TodayInHistory-Crawler
 pip3 install -r requirements.txt
 ```
 
-## Run
+## Usage
 
 在`spider.py`和`server.py`中有自定义的参数`username`、`password`和`dbname`，分别将它们修改为你的登录用户名、密码和数据库名。数据表名默认是`event`，也可以自行修改。先创建数据表，执行：
 ```sql
