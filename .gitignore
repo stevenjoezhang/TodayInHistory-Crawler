@@ -107,3 +107,4 @@ venv.bak/
 /__pycache__
 .project
 .pydevproject
+failed.txt
