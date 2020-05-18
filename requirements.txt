@@ -1,4 +1,4 @@
-requests==2.22.0
-beautifulsoup4==4.8.0
+requests==2.23.0
+beautifulsoup4==4.9.1
 PyMySQL==0.9.3
-Flask==1.1.1
+Flask==1.1.2
